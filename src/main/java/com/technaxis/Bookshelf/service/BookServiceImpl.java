@@ -1,11 +1,14 @@
 package com.technaxis.Bookshelf.service;
 
+import com.technaxis.Bookshelf.controller.dto.BookPaginationDto;
 import com.technaxis.Bookshelf.model.Book;
 import com.technaxis.Bookshelf.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -17,8 +20,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getById(Long id) {
-        Optional<Book> bookOptional= bookRepository.findById(id);
-        if(bookOptional.isPresent() ){
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        if (bookOptional.isPresent()) {
             return bookOptional.get();
         } else return null;
     }
@@ -34,7 +37,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getAll() {
-        return bookRepository.findAll();
+    public Page<Book> getAll(BookPaginationDto dto) {
+        Pageable pageable = PageRequest.of(dto.getPage(), dto.getSize());
+
+        if (dto.getTitle() != null && !dto.getTitle().isEmpty()) {
+            return bookRepository.findAllByTitleContainsIgnoreCase(pageable, dto.getTitle());
+        }
+
+        return bookRepository.findAll(pageable);
     }
 }
