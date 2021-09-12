@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS books (
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+title VARCHAR(100) NOT NULL,
+description TEXT,
+author VARCHAR(100)NOT NULL,
+isbn VARCHAR(20)NOT NULL,
+print_year INT,
+read_already BOOLEAN,
+image FILE,
+);
