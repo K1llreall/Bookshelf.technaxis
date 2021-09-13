@@ -1,12 +1,12 @@
 package com.technaxis.Bookshelf.controller.dto;
 
-import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 
 public class BookUpdateDto {
-    @Max(100)
+    @Size(max = 100)
     private String title;
     private String description;
-    @Max(20)
+    @Size(max = 20)
     private String isbn;
     private int printYear;
     private String image;
